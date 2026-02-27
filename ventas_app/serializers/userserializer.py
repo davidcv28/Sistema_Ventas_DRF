@@ -56,16 +56,13 @@ class RegisterStaffUserSerializer(serializers.ModelSerializer):
         fields = ['id','first_name','last_name','email','username','password','password2','is_staff']
 
     def validate_first_name(self, value):
-        # Normaliza a mayúsculas y verifica longitud mínima de 4 caracteres
         name_obj = value.upper().strip()
         errors = []
         letter_count = 0
         if len(name_obj) < 4:
             errors.append('El nombre debe tener al menos 4 caracteres')
-        # Regex para permitir solo letras, espacios y eñes
         if re.search(r'[^a-zA-Z\sñÑ]', name_obj):
-            errors.append('El nombre contriene caracteres no valido')
-        # Cuenta caracteres alfabéticos para asegurar contenido real
+            errors.append('El nombre contiene caracteres no válidos')
         for letter in name_obj:
             if letter.isalpha():
                 letter_count +=1
@@ -76,14 +73,13 @@ class RegisterStaffUserSerializer(serializers.ModelSerializer):
         return name_obj
 
     def validate_last_name(self, value):
-        # Validación similar al nombre pero con mínimo de 3 caracteres
         last_name_obj = value.upper().strip()
         errors = []
         letter_count = 0
         if len(last_name_obj)< 3:
-            errors.append('El apellido debe tener al menos 4 caracteres')
+            errors.append('El apellido debe tener al menos 3 caracteres')
         if re.search(r'[^a-zA-Z\sñÑ]', last_name_obj):
-            errors.append('El apellido contiene caracteres no validos')
+            errors.append('El apellido contiene caracteres no válidos')
         for letter in last_name_obj:
             if letter.isalpha():
                 letter_count += 1
@@ -94,7 +90,6 @@ class RegisterStaffUserSerializer(serializers.ModelSerializer):
         return last_name_obj
 
     def validate_email(self, value):
-        # Valida que el email pertenezca a dominios conocidos y sea único
         email_obj = value.strip()
         queryset = User.objects.filter(email__iexact = email_obj)
         allow_domains = ['@gmail.com','@hotmail.com','@outlook.com','@yahoo.com']
@@ -104,18 +99,16 @@ class RegisterStaffUserSerializer(serializers.ModelSerializer):
             if email_obj.endswith(domain):
                 domain_exists = True
         if not domain_exists:
-            errors.append('Dominio ingresado no valido')
-        # Excluye al propio usuario en caso de estar editando (instance existe)
+            errors.append('Dominio ingresado no válido')
         if self.instance:
             queryset = queryset.exclude(pk = self.instance.pk)
         if queryset.exists():
-            errors.append('El correo ingresado ya esta en uso')
+            errors.append('El correo ingresado ya está en uso')
         if errors:
             raise serializers.ValidationError(errors)
         return email_obj
 
     def validate_username(self, value):
-        # Valida longitud y disponibilidad del nombre de usuario
         username_obj = value.strip()
         queryset = User.objects.filter(username__iexact = username_obj)
         errors = []
@@ -130,7 +123,6 @@ class RegisterStaffUserSerializer(serializers.ModelSerializer):
         return username_obj
 
     def validate_password(self, value):
-        # Validación de seguridad: minúsculas, mayúsculas, números y símbolos
         pass_obj = value
         errors = []
         if len(pass_obj)< 8:
@@ -148,7 +140,6 @@ class RegisterStaffUserSerializer(serializers.ModelSerializer):
         return pass_obj
 
     def validate(self, attrs):
-        # Comprobación de que ambas contraseñas ingresadas coincidan
         password1 = attrs.get('password')
         password2 = attrs.get('password2')
         errors ={}
@@ -156,13 +147,11 @@ class RegisterStaffUserSerializer(serializers.ModelSerializer):
             errors['password2'] = 'Las contraseñas no coinciden'
         if errors:
             raise serializers.ValidationError(errors)
-        # Eliminamos password2 para que no llegue al método create del modelo User
         attrs.pop('password2')
         return attrs
 
     @transaction.atomic
     def create(self, validated_data):
-        # Crea el usuario y su carrito de forma atómica para evitar datos huérfanos
         user = User.objects.create_user(
             first_name = validated_data['first_name'],
             last_name = validated_data['last_name'],
@@ -203,7 +192,7 @@ class RegisterUserSerializer(serializers.ModelSerializer):
         write_only = True
     )
     username = serializers.CharField(
-        label = 'Nombre de usuarios',
+        label = 'Nombre de usuario',
         style = {'placeholder':'Escribe tu nombre de usuario'},
         required = True,
         trim_whitespace = True,
@@ -237,7 +226,7 @@ class RegisterUserSerializer(serializers.ModelSerializer):
         if letter_count < 3:
             errors.append('El nombre debe tener al menos 3 letras')
         if re.search(r'[^a-zA-Z\sñÑ]', name_obj):
-            errors.append('El nombre contiene caracteres no validos')
+            errors.append('El nombre contiene caracteres no válidos')
         if errors:
             raise serializers.ValidationError(errors)
         return name_obj
@@ -249,7 +238,7 @@ class RegisterUserSerializer(serializers.ModelSerializer):
         if len(lastname_obj)< 3:
             errors.append('El apellido debe tener al menos 3 caracteres')
         if re.search(r'[^a-zA-Z\sñÑ]', lastname_obj):
-            errors.append('El apellido contiene caracteres no validos')
+            errors.append('El apellido contiene caracteres no válidos')
         for letter in lastname_obj:
             if letter.isalpha():
                 letter_count += 1
@@ -269,9 +258,9 @@ class RegisterUserSerializer(serializers.ModelSerializer):
             if email_obj.endswith(domain):
                 domain_exist = True
         if not domain_exist:
-            errors.append('Dominio ingresado no valido')
+            errors.append('Dominio ingresado no válido')
         if queryset.exists():
-            errors.append('El correo ingresado ya esta en uso')
+            errors.append('El correo ingresado ya está en uso')
         if errors:
             raise serializers.ValidationError(errors)
         return email_obj
@@ -283,7 +272,7 @@ class RegisterUserSerializer(serializers.ModelSerializer):
         if len(username_obj)< 6:
             errors.append('El nombre de usuario debe tener al menos 6 caracteres')
         if queryset.exists():
-            errors.append('EL nombre de usuario ingresado ya esta en uso')
+            errors.append('El nombre de usuario ingresado ya está en uso')
         if errors:
             raise serializers.ValidationError(errors)
         return username_obj
@@ -318,7 +307,6 @@ class RegisterUserSerializer(serializers.ModelSerializer):
 
     @transaction.atomic
     def create(self, validated_data):
-        # Creamos el usuario base y vinculamos Carrito y Perfil adicionales
         user = User.objects.create_user(
             first_name = validated_data['first_name'],
             last_name = validated_data['last_name'],
@@ -372,7 +360,7 @@ class UpdateUserSerializer(serializers.ModelSerializer):
         if letter_count < 3:
             errors.append('El nombre debe tener al menos 3 letras')
         if re.search(r'[^a-zA-Z\sñÑ]', name_obj):
-            errors.append('El nombre contiene caracteres no validos')
+            errors.append('El nombre contiene caracteres no válidos')
         if errors:
             raise serializers.ValidationError(errors)
         return name_obj
@@ -384,7 +372,7 @@ class UpdateUserSerializer(serializers.ModelSerializer):
         if len(lastname_obj)< 3:
             errors.append('El apellido debe tener al menos 3 caracteres')
         if re.search(r'[^a-zA-Z\sñÑ]', lastname_obj):
-            errors.append('El apellido contiene caracteres no validos')
+            errors.append('El apellido contiene caracteres no válidos')
         for letter in lastname_obj:
             if letter.isalpha():
                 letter_count += 1
@@ -404,11 +392,11 @@ class UpdateUserSerializer(serializers.ModelSerializer):
             if email_obj.endswith(domain):
                 domain_exist = True
         if not domain_exist:
-            errors.append('Dominio ingresado no valido')
+            errors.append('Dominio ingresado no válido')
         if self.instance:
             queryset = queryset.exclude(pk=self.instance.pk)
         if queryset.exists():
-            errors.append('El correo ingresado ya esta en uso')
+            errors.append('El correo ingresado ya está en uso')
         if errors:
             raise serializers.ValidationError(errors)
         return email_obj
@@ -426,7 +414,7 @@ class UpdatePasswordSerializer(serializers.Serializer):
         write_only = True
     )
     new_password = serializers.CharField(
-        label ='Nueva actual',
+        label ='Nueva contraseña',
         style = {'placeholder':'Escribe tu nueva contraseña','input_type':'password'},
         required = True,
         write_only = True
@@ -456,19 +444,17 @@ class UpdatePasswordSerializer(serializers.Serializer):
         return pass_obj
 
     def validate(self, attrs):
-        # Accedemos al usuario desde el contexto de la petición
         user = self.context.get('request').user
         old_password = attrs.get('old_password')
         new_password = attrs.get('new_password')
         confirm_password = attrs.get('confirm_password')
         errors ={}
-        # Verificamos la contraseña anterior con el método check_password de Django
         if not user.check_password(old_password):
-            errors['old_password'] = 'La contraseña actual es incorrecta'
+            errors['old_password'] = 'La contraseña actual es incorrecta' 
         if new_password == old_password:
-            errors['new_password'] = 'La contraseña ingresada no puede ser la que ya tienes'
+            errors['new_password'] = 'La contraseña ingresada no puede ser la que ya tienes' 
         if new_password != confirm_password:
-            errors['confirm_password'] = 'Las contraseñas no coinciden'
+            errors['confirm_password'] = 'Las contraseñas no coinciden' 
         if errors:
             raise serializers.ValidationError(errors)
         attrs.pop('old_password')
@@ -476,7 +462,6 @@ class UpdatePasswordSerializer(serializers.Serializer):
         return attrs
 
     def update(self, instance,validated_data):
-        # Usamos set_password para hashear la contraseña correctamente antes de guardar
         instance.set_password(validated_data.get('new_password'))
         instance.save()
         return instance
@@ -528,27 +513,27 @@ class UpdateProfileUserSerializer(serializers.ModelSerializer):
             # Validación de DNI (7 u 8 dígitos numéricos)
             if type_document == 'DNI':
                 if len(document_obj) < 7 or len(document_obj)>8:
-                    errors.append('Numero de DNI no valido')
+                    errors.append('Número de DNI no válido')
                 if re.search(r'[^0-9]', document_obj):
-                    errors.append('El dni contiene caracteres no validos')
+                    errors.append('El DNI contiene caracteres no válidos')
             # Validación de CUIT/CUIL con prefijos permitidos en Argentina
             if type_document == 'CUIT':
                 valid_num = ['20', '23', '24', '27', '30', '33', '34']
                 valid_cuit = False
                 if len(document_obj) != 11:
-                    errors.append('Numero de CUIT/CUIL no valido')
+                    errors.append('Número de CUIT/CUIL no válido')
                 for valid in valid_num:
                     if  document_obj.startswith(valid):
                         valid_cuit = True
                         break
                 if not valid_cuit:
-                    errors.append('Prefijo CUIT/CUIL no valido')
+                    errors.append('Prefijo de CUIT/CUIL no válido')
             # Validación de Pasaporte (alfanumérico)
             if type_document == 'PAS':
                 if len(document_obj)< 6 or len(document_obj)>20:
-                    errors.append('Identificación de pasaporte no valido')
+                    errors.append('Identificación de pasaporte no válida')
                 if re.search(r'[^a-zA-Z0-9]', document_obj):
-                    errors.append('El codigo del pasaporte contiene caracteres no validos')
+                    errors.append('El código del pasaporte contiene caracteres no válidos')
             if errors:
                 raise serializers.ValidationError(errors)
         return document_obj
@@ -585,9 +570,9 @@ class RegisterProvincieSerializer(serializers.ModelSerializer):
         if self.instance:
             queryset = queryset.exclude(pk=self.instance.pk)
         if queryset.exists():
-            errors.append('El nombre de la pronvicia ingresada ya existe')
+            errors.append('El nombre de la provincia ingresada ya existe')
         if provinces_obj not in provinces_argentina:
-            errors.append('La provincia ingresada no existe en argentina')
+            errors.append('La provincia ingresada no existe en Argentina')
         if errors:
             raise serializers.ValidationError(errors)
         return provinces_obj

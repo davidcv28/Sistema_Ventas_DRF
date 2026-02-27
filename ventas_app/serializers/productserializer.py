@@ -5,8 +5,19 @@ from django.db.models import Avg,Sum,Count
 from django.forms import widgets
 import re
 
-#####PRODUCTS REGISTER SERIALIZER
+##### PRODUCTS REGISTER SERIALIZER
+#
+# Este módulo contiene serializers para crear y validar los modelos de productos,
+# categorías, marcas, valoraciones y comentarios. Cada clase dispone de un
+# docstring descriptivo para que drf-spectacular pueda documentar correctamente
+# el esquema.
+
 class ProductRegisterSerializer(serializers.ModelSerializer):
+    """
+    Serializer para el alta y la edición de productos.
+
+    Valida nombre único, precios dentro de rango, stock y formato de imagen.
+    """
     id = serializers.ReadOnlyField()
     name_product = serializers.CharField(
         label = 'Producto',
@@ -51,7 +62,7 @@ class ProductRegisterSerializer(serializers.ModelSerializer):
         if len(product_obj)< 3:
             errors.append('El nombre del producto debe tener al menos 3 caracteres')
         if re.search(r'[^a-zA-Z0-9\s\-\.\.ñÑ]', product_obj):
-            errors.append('El nombre del producto contiene caracteres no validos')
+            errors.append('El nombre del producto contiene caracteres no válidos')
         for letter in product_obj:
             if letter.isalpha():
                 letter_count += 1
@@ -68,7 +79,7 @@ class ProductRegisterSerializer(serializers.ModelSerializer):
         price_obj = value
         errors = []
         if price_obj is None:
-            errors.append('Porfavor ingrese un precio para el producto')
+            errors.append('Por favor ingrese un precio para el producto')
         if price_obj < 1:
             errors.append('El precio del producto debe ser mayor a 1')
         if price_obj >99999999:
@@ -80,7 +91,7 @@ class ProductRegisterSerializer(serializers.ModelSerializer):
         stock_obj = value
         errors =[]
         if stock_obj is None:
-            errors.append('Porfavor ingrese un stock para el producto')
+            errors.append('Por favor ingrese un stock para el producto')
         if stock_obj < 1:
             errors.append('El stock debe ser mayor a 0')
         if stock_obj > 99999:
@@ -94,7 +105,7 @@ class ProductRegisterSerializer(serializers.ModelSerializer):
         errors = []
         if image_obj:
             if image_obj.content_type not in allow_content:
-                errors.append('Formato de imagen no valido, solo se admite PNG')
+                errors.append('Formato de imagen no válido, solo se admite PNG')
             if image_obj.size > 5 * 1024 * 1024:
                 errors.append('La imagen es demasiado grande')
             if errors:
@@ -102,10 +113,15 @@ class ProductRegisterSerializer(serializers.ModelSerializer):
         return image_obj
 
 ##### CATEGORY SERIALIZER
+
 class CategorySerializer(serializers.ModelSerializer):
+    """
+    Gestiona las categorías de producto. Se asegura que el nombre tenga mínimo
+    3 caracteres y no duplique otras categorías existentes.
+    """
     name_category =serializers.CharField(
-        label = 'Nombre de categoria',
-        style = {'placeholder':'Escribe el nombre de la categoria'},
+        label = 'Nombre de categoría',
+        style = {'placeholder':'Escribe el nombre de la categoría'},
         required = True,
         trim_whitespace = True
     )
@@ -118,25 +134,29 @@ class CategorySerializer(serializers.ModelSerializer):
         errors = []
         letter_count = 0
         if len(category_obj)< 3:
-            errors.append('El nombre de la categoria debe tener al menos 3 caracteres')
+            errors.append('El nombre de la categoría debe tener al menos 3 caracteres')
         for letter in category_obj:
             if letter.isalpha():
                 letter_count += 1
         if letter_count <3:
-            errors.append('El nombre de la categoria debe tener al menos 3 letras')
+            errors.append('El nombre de la categoría debe tener al menos 3 letras')
         if not re.search(r'[a-zA-Z\sñÑ]', category_obj):
-            errors.append('El nombre de la categoria contiene caracteres no validos')
+            errors.append('El nombre de la categoría contiene caracteres no válidos')
         if self.instance:
             queryset = queryset.exclude(pk=self.instance.pk)
         if queryset.exists():
-            errors.append('El nombre de la categoria ya existe')
+            errors.append('El nombre de la categoría ya existe')
         if errors:
             raise serializers.ValidationError(errors)
         return category_obj
 
 
 ##### BRAND SERIALIZER
+
 class BrandSerializer(serializers.ModelSerializer):
+    """
+    Controla las marcas de productos, evitando duplicados y nombres inválidos.
+    """
     name_brand = serializers.CharField(
         label = 'Marca',
         style = {'placeholder':'Escribe el nombre de la marca'},
@@ -160,7 +180,7 @@ class BrandSerializer(serializers.ModelSerializer):
             errors.append('El nombre de la marca debe tener al menos 2 letras')
         
         if  re.search (r'[^a-zA-Z0-9\s\-\.\,ñÑ]', brand_obj):
-            errors.append('El nombre de la categoria contiene caracteres no validos')
+            errors.append('El nombre de la categoría contiene caracteres no válidos')
         if self.instance:
             queryset = queryset.exclude(pk = self.instance.pk)
         if queryset.exists():
@@ -168,8 +188,13 @@ class BrandSerializer(serializers.ModelSerializer):
         if errors:
             raise serializers.ValidationError(errors)
         return brand_obj
-####REGISTER VALORATION
+##### REGISTER VALORATION
+
 class RegisterValorationSerialize(serializers.ModelSerializer):
+    """
+    Permite a un usuario registrar una valoración (1-5) para un producto. Cada
+    vez que se crea, actualiza la media del producto.
+    """
     id = serializers.ReadOnlyField()
     user = serializers.HiddenField(default = serializers.CurrentUserDefault())
     user_name = serializers.ReadOnlyField(
@@ -212,8 +237,13 @@ class RegisterValorationSerialize(serializers.ModelSerializer):
         product_select.save()
         return instance_valoration
         
-####REGISTER COMMENTS SERIALIZER
+##### REGISTER COMMENTS SERIALIZER
+
 class RegisterCommentSerializer(serializers.ModelSerializer):
+    """
+    Maneja los comentarios que los usuarios dejan sobre los productos. Se
+    verifica que el usuario que intenta modificar sea el autor del comentario.
+    """
     id = serializers.ReadOnlyField()
     user = serializers.HiddenField(default = serializers.CurrentUserDefault())
     user_name = serializers.ReadOnlyField(source='user.username')
@@ -242,7 +272,7 @@ class RegisterCommentSerializer(serializers.ModelSerializer):
         comment_user = attrs.get('user')
         error = {}
         if user != comment_user:
-            error['user']='No tienes permitido modificar este comentario'
+            error['user']='No tienes permiso para modificar este comentario'
         if error:
             raise serializers.ValidationError(error)
         return attrs

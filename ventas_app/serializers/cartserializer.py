@@ -3,8 +3,15 @@ from ..models import Cart, CartItem, Products, Invoice, DetailPurchase
 from django.db import transaction
 
 
-####REGISTER CART ITEM SERIALIZER
+#### REGISTER CART ITEM SERIALIZER
+
 class RegisterCartItemSerializer(serializers.ModelSerializer):
+    """
+    Serializador para añadir o modificar ítems en el carrito.
+
+    Controla la cantidad (1‑99) y calcula subtotal; se reutiliza en el
+    `CartSerializer` para lista de artículos.
+    """
     id= serializers.ReadOnlyField()
     product = serializers.PrimaryKeyRelatedField(
         label = 'Seleccionar producto',
@@ -44,8 +51,13 @@ class RegisterCartItemSerializer(serializers.ModelSerializer):
         )
         return instance
 
-####CART SERIALIZER
+#### CART SERIALIZER
+
 class CartSerializer(serializers.ModelSerializer):
+    """
+    Representa el carrito completo del usuario, incluyendo los ítems
+    anidados (`RegisterCartItemSerializer`) y el total calculado.
+    """
     id = serializers.ReadOnlyField()
     user_name = serializers.ReadOnlyField(source = 'user.username')
     user = serializers.HiddenField(default = serializers.CurrentUserDefault())
@@ -59,13 +71,17 @@ class CartSerializer(serializers.ModelSerializer):
 
 #####INVOICE REGISTER SERIALIZER
 class RegisterInvoiceSerializer(serializers.ModelSerializer):
+    """
+    Crea una factura basada en el contenido del carrito del usuario.
+
+    Reduce stock de los productos, genera `DetailPurchase` y vacía el carrito.
+    """
     class Meta:
         model = Invoice
         fields = []
 
     def create(self, validated_data):
         user = self.context.get('request').user
-        # Asegúrate que el related_name sea 'perfil' o 'userprofile' según tus otros códigos
         user_profile = user.profile 
         user_cart = user.cart_user
         
@@ -83,12 +99,10 @@ class RegisterInvoiceSerializer(serializers.ModelSerializer):
                 
                 invoice_details = []
                 for item in user_cart.items_cart.all():
-                    # Corregido: Usamos stock_product de forma consistente
                     if item.product.stock_product < item.quantity:
                         raise serializers.ValidationError(f'No hay stock suficiente de {item.product.name_product}')
                     
                     product_item = item.product
-                    # Corregido: Usamos stock_product para restar
                     product_item.stock_product -= item.quantity
                     product_item.save()
                     
@@ -101,36 +115,42 @@ class RegisterInvoiceSerializer(serializers.ModelSerializer):
                         subtotal = round(item.subtotal, 2) 
                     )
                     invoice_details.append(item_details)
-                
-                # Creación masiva para mejor rendimiento
                 DetailPurchase.objects.bulk_create(invoice_details)
-                # Vaciamos el carrito después de la compra
                 user_cart.items_cart.all().delete()
                 
             return new_invoice
         
-        raise serializers.ValidationError('El carrito esta vacio')
+        raise serializers.ValidationError('El carrito está vacío')
 
 class ListInvoiceSerializer(serializers.ModelSerializer):
+    """
+    Serializador simple para listar facturas existentes .
+    """
     class Meta:
         model = Invoice
         fields = '__all__'
 class PurchaseDetailSerializer(serializers.ModelSerializer):
+    """
+    Muestra los detalles (líneas) de una compra/factura.
+    """
     class Meta:
         model = DetailPurchase
         fields = '__all__'
 class ListInvoiceAndDetailSerializer(serializers.ModelSerializer):
+    """
+    Combina factura y sus detalles en un solo serializer para vistas anidadas.
+    """
     id = serializers.ReadOnlyField()
-    user_first_name = serializers.ReadOnlyField(),
-    user_last_name = serializers.ReadOnlyField(),
-    user_document = serializers.ReadOnlyField(),
-    user_provincie = serializers.ReadOnlyField(),
-    user_address = serializers.ReadOnlyField(),
+    user_first_name = serializers.ReadOnlyField()
+    user_last_name = serializers.ReadOnlyField()
+    user_document = serializers.ReadOnlyField()
+    user_provincie = serializers.ReadOnlyField()
+    user_address = serializers.ReadOnlyField()
     invoice_details = PurchaseDetailSerializer(many = True, read_only = True, source = 'detail_purchase')
     total = serializers.ReadOnlyField()
     class Meta:
         model = Invoice
-        fields = ['id','user_first_name','user_last_name','user_document','user_provincie','user_address','user_cart','total']
+        fields = ['id','user_first_name','user_last_name','user_document','user_provincie','user_address','invoice_details','total']
 
 
             

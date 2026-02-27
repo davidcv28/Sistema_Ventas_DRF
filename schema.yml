@@ -1,0 +1,2043 @@
+openapi: 3.0.3
+info:
+  title: Sistema de Ventas API
+  version: 1.0.0
+  description: Documentación detallada del backend
+paths:
+  /api/add_item_cart/:
+    get:
+      operationId: add_item_cart_list
+      tags:
+      - add_item_cart
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RegisterCartItem'
+          description: ''
+    post:
+      operationId: add_item_cart_create
+      tags:
+      - add_item_cart
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterCartItem'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/RegisterCartItem'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/RegisterCartItem'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RegisterCartItem'
+          description: ''
+  /api/add_item_cart/{id}/:
+    get:
+      operationId: add_item_cart_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - add_item_cart
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RegisterCartItem'
+          description: ''
+    put:
+      operationId: add_item_cart_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - add_item_cart
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterCartItem'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/RegisterCartItem'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/RegisterCartItem'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RegisterCartItem'
+          description: ''
+    patch:
+      operationId: add_item_cart_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - add_item_cart
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedRegisterCartItem'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedRegisterCartItem'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedRegisterCartItem'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RegisterCartItem'
+          description: ''
+    delete:
+      operationId: add_item_cart_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - add_item_cart
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/cart_view/:
+    get:
+      operationId: cart_view_list
+      tags:
+      - cart_view
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Cart'
+          description: ''
+  /api/comment_add/:
+    get:
+      operationId: comment_add_list
+      tags:
+      - comment_add
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RegisterComment'
+          description: ''
+    post:
+      operationId: comment_add_create
+      tags:
+      - comment_add
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterComment'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/RegisterComment'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/RegisterComment'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RegisterComment'
+          description: ''
+  /api/comment_add/{id}/:
+    get:
+      operationId: comment_add_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: Un valor de entero único que identifique este comments.
+        required: true
+      tags:
+      - comment_add
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RegisterComment'
+          description: ''
+    put:
+      operationId: comment_add_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: Un valor de entero único que identifique este comments.
+        required: true
+      tags:
+      - comment_add
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterComment'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/RegisterComment'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/RegisterComment'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RegisterComment'
+          description: ''
+    patch:
+      operationId: comment_add_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: Un valor de entero único que identifique este comments.
+        required: true
+      tags:
+      - comment_add
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedRegisterComment'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedRegisterComment'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedRegisterComment'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RegisterComment'
+          description: ''
+    delete:
+      operationId: comment_add_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: Un valor de entero único que identifique este comments.
+        required: true
+      tags:
+      - comment_add
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/invoice/generate_invoice/:
+    post:
+      operationId: invoice_generate_invoice_create
+      tags:
+      - invoice
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /api/invoice/invoices/:
+    get:
+      operationId: invoice_invoices_retrieve
+      tags:
+      - invoice
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListInvoice'
+          description: ''
+  /api/invoice/invoices_details/:
+    get:
+      operationId: invoice_invoices_details_retrieve
+      tags:
+      - invoice
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListInvoiceAndDetail'
+          description: ''
+  /api/provincia/:
+    get:
+      operationId: provincia_list
+      tags:
+      - provincia
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RegisterProvincie'
+          description: ''
+    post:
+      operationId: provincia_create
+      tags:
+      - provincia
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterProvincie'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/RegisterProvincie'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/RegisterProvincie'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RegisterProvincie'
+          description: ''
+  /api/provincia/{id}/:
+    get:
+      operationId: provincia_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: Un valor de entero único que identifique este country.
+        required: true
+      tags:
+      - provincia
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RegisterProvincie'
+          description: ''
+    put:
+      operationId: provincia_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: Un valor de entero único que identifique este country.
+        required: true
+      tags:
+      - provincia
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterProvincie'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/RegisterProvincie'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/RegisterProvincie'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RegisterProvincie'
+          description: ''
+    patch:
+      operationId: provincia_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: Un valor de entero único que identifique este country.
+        required: true
+      tags:
+      - provincia
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedRegisterProvincie'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedRegisterProvincie'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedRegisterProvincie'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RegisterProvincie'
+          description: ''
+    delete:
+      operationId: provincia_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: Un valor de entero único que identifique este country.
+        required: true
+      tags:
+      - provincia
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/register_brand/:
+    get:
+      operationId: register_brand_list
+      tags:
+      - register_brand
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Brand'
+          description: ''
+    post:
+      operationId: register_brand_create
+      tags:
+      - register_brand
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Brand'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Brand'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Brand'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Brand'
+          description: ''
+  /api/register_brand/{id}/:
+    get:
+      operationId: register_brand_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: Un valor de entero único que identifique este brand.
+        required: true
+      tags:
+      - register_brand
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Brand'
+          description: ''
+    put:
+      operationId: register_brand_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: Un valor de entero único que identifique este brand.
+        required: true
+      tags:
+      - register_brand
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Brand'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Brand'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Brand'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Brand'
+          description: ''
+    patch:
+      operationId: register_brand_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: Un valor de entero único que identifique este brand.
+        required: true
+      tags:
+      - register_brand
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedBrand'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedBrand'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedBrand'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Brand'
+          description: ''
+    delete:
+      operationId: register_brand_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: Un valor de entero único que identifique este brand.
+        required: true
+      tags:
+      - register_brand
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/register_category/:
+    get:
+      operationId: register_category_list
+      tags:
+      - register_category
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Category'
+          description: ''
+    post:
+      operationId: register_category_create
+      tags:
+      - register_category
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Category'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Category'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Category'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Category'
+          description: ''
+  /api/register_category/{id}/:
+    get:
+      operationId: register_category_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: Un valor de entero único que identifique este category.
+        required: true
+      tags:
+      - register_category
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Category'
+          description: ''
+    put:
+      operationId: register_category_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: Un valor de entero único que identifique este category.
+        required: true
+      tags:
+      - register_category
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Category'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Category'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Category'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Category'
+          description: ''
+    patch:
+      operationId: register_category_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: Un valor de entero único que identifique este category.
+        required: true
+      tags:
+      - register_category
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedCategory'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedCategory'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedCategory'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Category'
+          description: ''
+    delete:
+      operationId: register_category_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: Un valor de entero único que identifique este category.
+        required: true
+      tags:
+      - register_category
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/register_product/:
+    get:
+      operationId: register_product_list
+      parameters:
+      - in: query
+        name: brand_product
+        schema:
+          type: array
+          items:
+            type: integer
+        description: Filtrar por marca
+        explode: true
+        style: form
+      - in: query
+        name: category_product
+        schema:
+          type: array
+          items:
+            type: integer
+        description: Filtrar por categoria
+        explode: true
+        style: form
+      - in: query
+        name: max_price_product
+        schema:
+          type: number
+        description: Precio maximo
+      - in: query
+        name: min_price_product
+        schema:
+          type: number
+        description: Precio minimo
+      - in: query
+        name: name_product
+        schema:
+          type: string
+        description: Buscar producto
+      tags:
+      - register_product
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProductRegister'
+          description: ''
+    post:
+      operationId: register_product_create
+      tags:
+      - register_product
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ProductRegister'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ProductRegister'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductRegister'
+          description: ''
+  /api/register_product/{id}/:
+    get:
+      operationId: register_product_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: Un valor de entero único que identifique este products.
+        required: true
+      tags:
+      - register_product
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductRegister'
+          description: ''
+    put:
+      operationId: register_product_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: Un valor de entero único que identifique este products.
+        required: true
+      tags:
+      - register_product
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ProductRegister'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ProductRegister'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductRegister'
+          description: ''
+    patch:
+      operationId: register_product_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: Un valor de entero único que identifique este products.
+        required: true
+      tags:
+      - register_product
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedProductRegister'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedProductRegister'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductRegister'
+          description: ''
+    delete:
+      operationId: register_product_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: Un valor de entero único que identifique este products.
+        required: true
+      tags:
+      - register_product
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/registro/:
+    post:
+      operationId: registro_create
+      tags:
+      - registro
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterUser'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/RegisterUser'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/RegisterUser'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RegisterUser'
+          description: ''
+  /api/token/:
+    post:
+      operationId: token_create
+      description: |-
+        Takes a set of user credentials and returns an access and refresh JSON web
+        token pair to prove the authentication of those credentials.
+      tags:
+      - token
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenObtainPair'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TokenObtainPair'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TokenObtainPair'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenObtainPair'
+          description: ''
+  /api/token/refresh/:
+    post:
+      operationId: token_refresh_create
+      description: |-
+        Takes a refresh type JSON web token and returns an access type JSON web
+        token if the refresh token is valid.
+      tags:
+      - token
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenRefresh'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TokenRefresh'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TokenRefresh'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenRefresh'
+          description: ''
+  /api/token/verify/:
+    post:
+      operationId: token_verify_create
+      description: |-
+        Takes a token and indicates if it is valid.  This view provides no
+        information about a token's fitness for a particular use.
+      tags:
+      - token
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenVerify'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TokenVerify'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TokenVerify'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenVerify'
+          description: ''
+  /api/user_admin/:
+    get:
+      operationId: user_admin_list
+      tags:
+      - user_admin
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RegisterStaffUser'
+          description: ''
+    post:
+      operationId: user_admin_create
+      tags:
+      - user_admin
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterStaffUser'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/RegisterStaffUser'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/RegisterStaffUser'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RegisterStaffUser'
+          description: ''
+  /api/user_update_info/update_password/:
+    post:
+      operationId: user_update_info_update_password_create
+      tags:
+      - user_update_info
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdatePassword'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/UpdatePassword'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UpdatePassword'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdatePassword'
+          description: ''
+  /api/user_update_info/update_profile/:
+    get:
+      operationId: user_update_info_update_profile_retrieve
+      tags:
+      - user_update_info
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateProfileUser'
+          description: ''
+    put:
+      operationId: user_update_info_update_profile_update
+      tags:
+      - user_update_info
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateProfileUser'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/UpdateProfileUser'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UpdateProfileUser'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateProfileUser'
+          description: ''
+    patch:
+      operationId: user_update_info_update_profile_partial_update
+      tags:
+      - user_update_info
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedUpdateProfileUser'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedUpdateProfileUser'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedUpdateProfileUser'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateProfileUser'
+          description: ''
+  /api/user_update_info/update_user/:
+    get:
+      operationId: user_update_info_update_user_retrieve
+      tags:
+      - user_update_info
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateUser'
+          description: ''
+    put:
+      operationId: user_update_info_update_user_update
+      tags:
+      - user_update_info
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateUser'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/UpdateUser'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UpdateUser'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateUser'
+          description: ''
+    patch:
+      operationId: user_update_info_update_user_partial_update
+      tags:
+      - user_update_info
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedUpdateUser'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedUpdateUser'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedUpdateUser'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateUser'
+          description: ''
+  /api/valoration_product/:
+    get:
+      operationId: valoration_product_list
+      tags:
+      - valoration_product
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RegisterValorationSerialize'
+          description: ''
+    post:
+      operationId: valoration_product_create
+      tags:
+      - valoration_product
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterValorationSerialize'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/RegisterValorationSerialize'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/RegisterValorationSerialize'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RegisterValorationSerialize'
+          description: ''
+  /api/valoration_product/{id}/:
+    get:
+      operationId: valoration_product_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - valoration_product
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RegisterValorationSerialize'
+          description: ''
+components:
+  schemas:
+    Brand:
+      type: object
+      description: Controla las marcas de productos, evitando duplicados y nombres
+        inválidos.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name_brand:
+          type: string
+          title: Marca
+      required:
+      - id
+      - name_brand
+    Cart:
+      type: object
+      description: |-
+        Representa el carrito completo del usuario, incluyendo los ítems
+        anidados (`RegisterCartItemSerializer`) y el total calculado.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        user_name:
+          type: string
+          title: Nombre de usuario
+          description: 'Requerido. 150 carácteres como máximo. Únicamente letras,
+            dígitos y @/./+/-/_ '
+          readOnly: true
+        cart:
+          type: array
+          items:
+            $ref: '#/components/schemas/RegisterCartItem'
+          readOnly: true
+        total_price:
+          type: string
+          readOnly: true
+        created_at:
+          type: string
+          format: date
+          readOnly: true
+      required:
+      - cart
+      - created_at
+      - id
+      - total_price
+      - user_name
+    Category:
+      type: object
+      description: |-
+        Gestiona las categorías de producto. Se asegura que el nombre tenga mínimo
+        3 caracteres y no duplique otras categorías existentes.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name_category:
+          type: string
+          title: Nombre de categoría
+      required:
+      - id
+      - name_category
+    ListInvoice:
+      type: object
+      description: Serializador simple para listar facturas existentes .
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        number_invoice:
+          type: string
+          nullable: true
+          maxLength: 20
+        user_first_name:
+          type: string
+          maxLength: 80
+        user_last_name:
+          type: string
+          maxLength: 80
+        user_document:
+          type: string
+          maxLength: 100
+        user_provincie:
+          type: string
+          maxLength: 100
+        user_address:
+          type: string
+          maxLength: 150
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        total:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+        user:
+          type: integer
+      required:
+      - created_at
+      - id
+      - user
+      - user_address
+      - user_document
+      - user_first_name
+      - user_last_name
+      - user_provincie
+    ListInvoiceAndDetail:
+      type: object
+      description: Combina factura y sus detalles en un solo serializer para vistas
+        anidadas.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        user_first_name:
+          type: string
+          readOnly: true
+        user_last_name:
+          type: string
+          readOnly: true
+        user_document:
+          type: string
+          readOnly: true
+        user_provincie:
+          type: string
+          readOnly: true
+        user_address:
+          type: string
+          readOnly: true
+        invoice_details:
+          type: array
+          items:
+            $ref: '#/components/schemas/PurchaseDetail'
+          readOnly: true
+        total:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+      required:
+      - id
+      - invoice_details
+      - total
+      - user_address
+      - user_document
+      - user_first_name
+      - user_last_name
+      - user_provincie
+    MaritalStatusEnum:
+      enum:
+      - SOLTERO
+      - CASADO
+      - VIUDO
+      type: string
+      description: |-
+        * `SOLTERO` - SOLTERO/A
+        * `CASADO` - CASADO/A
+        * `VIUDO` - VIUDO/A
+    PatchedBrand:
+      type: object
+      description: Controla las marcas de productos, evitando duplicados y nombres
+        inválidos.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name_brand:
+          type: string
+          title: Marca
+    PatchedCategory:
+      type: object
+      description: |-
+        Gestiona las categorías de producto. Se asegura que el nombre tenga mínimo
+        3 caracteres y no duplique otras categorías existentes.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name_category:
+          type: string
+          title: Nombre de categoría
+    PatchedProductRegister:
+      type: object
+      description: |-
+        Serializer para el alta y la edición de productos.
+
+        Valida nombre único, precios dentro de rango, stock y formato de imagen.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name_product:
+          type: string
+          title: Producto
+        category_product:
+          type: integer
+          title: Seleccionar categoria
+        category:
+          type: string
+          readOnly: true
+        brand_product:
+          type: integer
+          title: Seleccionar marca
+        brand:
+          type: string
+          readOnly: true
+        price_product:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          default: '1.00'
+          title: Precio
+        stock_product:
+          type: integer
+          default: 1
+          title: Stock
+        image_product:
+          type: string
+          format: uri
+          title: Imagen de producto
+    PatchedRegisterCartItem:
+      type: object
+      description: |-
+        Serializador para añadir o modificar ítems en el carrito.
+
+        Controla la cantidad (1‑99) y calcula subtotal; se reutiliza en el
+        `CartSerializer` para lista de artículos.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        product:
+          type: integer
+          title: Seleccionar producto
+        product_name:
+          type: string
+          readOnly: true
+        product_price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+        quantity:
+          type: integer
+          default: 1
+          title: Cantidad
+        subtotal:
+          type: string
+          readOnly: true
+    PatchedRegisterComment:
+      type: object
+      description: |-
+        Maneja los comentarios que los usuarios dejan sobre los productos. Se
+        verifica que el usuario que intenta modificar sea el autor del comentario.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        user_name:
+          type: string
+          title: Nombre de usuario
+          description: 'Requerido. 150 carácteres como máximo. Únicamente letras,
+            dígitos y @/./+/-/_ '
+          readOnly: true
+        product:
+          type: integer
+          title: Seleccionar producto
+        product_name:
+          type: string
+          readOnly: true
+        comment:
+          type: string
+          title: Comentario
+        date:
+          type: string
+          format: date
+          readOnly: true
+    PatchedRegisterProvincie:
+      type: object
+      description: |-
+        Serializer para registrar provincias, asegurando que
+        el nombre coincida con las provincias reales de Argentina.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name_country:
+          type: string
+          title: Provincia
+    PatchedUpdateProfileUser:
+      type: object
+      description: |-
+        Actualiza la información del perfil del usuario, incluyendo validación
+        de documentos oficiales (DNI, CUIT, Pasaporte).
+      properties:
+        type_document:
+          allOf:
+          - $ref: '#/components/schemas/TypeDocumentEnum'
+          title: Tipo de documento
+        document:
+          type: string
+          title: Identificación
+        country:
+          type: integer
+          title: Seleccionar provincia
+        address:
+          type: string
+          title: Domicilio
+        marital_status:
+          allOf:
+          - $ref: '#/components/schemas/MaritalStatusEnum'
+          title: Estado civil
+    PatchedUpdateUser:
+      type: object
+      description: |-
+        Permite actualizar los datos básicos del usuario (Nombre, Apellido, Email).
+        Mantiene el ID y el Username como campos de solo lectura por seguridad.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        username:
+          type: string
+          title: Nombre de usuario
+          description: 'Requerido. 150 carácteres como máximo. Únicamente letras,
+            dígitos y @/./+/-/_ '
+          readOnly: true
+        first_name:
+          type: string
+          title: Nombre
+        last_name:
+          type: string
+          title: Apellido
+        email:
+          type: string
+          format: email
+          title: Correo electronico
+    ProductRegister:
+      type: object
+      description: |-
+        Serializer para el alta y la edición de productos.
+
+        Valida nombre único, precios dentro de rango, stock y formato de imagen.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name_product:
+          type: string
+          title: Producto
+        category_product:
+          type: integer
+          title: Seleccionar categoria
+        category:
+          type: string
+          readOnly: true
+        brand_product:
+          type: integer
+          title: Seleccionar marca
+        brand:
+          type: string
+          readOnly: true
+        price_product:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          default: '1.00'
+          title: Precio
+        stock_product:
+          type: integer
+          default: 1
+          title: Stock
+        image_product:
+          type: string
+          format: uri
+          title: Imagen de producto
+      required:
+      - brand
+      - brand_product
+      - category
+      - category_product
+      - id
+      - image_product
+      - name_product
+    PurchaseDetail:
+      type: object
+      description: Muestra los detalles (líneas) de una compra/factura.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name_product:
+          type: string
+          nullable: true
+          maxLength: 150
+        price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+        quantity:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+        subtotal:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+        invoice:
+          type: integer
+        product:
+          type: integer
+      required:
+      - id
+      - invoice
+      - price
+      - product
+    RegisterCartItem:
+      type: object
+      description: |-
+        Serializador para añadir o modificar ítems en el carrito.
+
+        Controla la cantidad (1‑99) y calcula subtotal; se reutiliza en el
+        `CartSerializer` para lista de artículos.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        product:
+          type: integer
+          title: Seleccionar producto
+        product_name:
+          type: string
+          readOnly: true
+        product_price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+        quantity:
+          type: integer
+          default: 1
+          title: Cantidad
+        subtotal:
+          type: string
+          readOnly: true
+      required:
+      - id
+      - product
+      - product_name
+      - product_price
+      - subtotal
+    RegisterComment:
+      type: object
+      description: |-
+        Maneja los comentarios que los usuarios dejan sobre los productos. Se
+        verifica que el usuario que intenta modificar sea el autor del comentario.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        user_name:
+          type: string
+          title: Nombre de usuario
+          description: 'Requerido. 150 carácteres como máximo. Únicamente letras,
+            dígitos y @/./+/-/_ '
+          readOnly: true
+        product:
+          type: integer
+          title: Seleccionar producto
+        product_name:
+          type: string
+          readOnly: true
+        comment:
+          type: string
+          title: Comentario
+        date:
+          type: string
+          format: date
+          readOnly: true
+      required:
+      - comment
+      - date
+      - id
+      - product
+      - product_name
+      - user_name
+    RegisterProvincie:
+      type: object
+      description: |-
+        Serializer para registrar provincias, asegurando que
+        el nombre coincida con las provincias reales de Argentina.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name_country:
+          type: string
+          title: Provincia
+      required:
+      - id
+      - name_country
+    RegisterStaffUser:
+      type: object
+      description: |-
+        Serializer para el registro de usuarios de staff con validaciones
+        estrictas de nombre, email y complejidad de contraseña.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        first_name:
+          type: string
+          title: Nombre
+        last_name:
+          type: string
+          title: Apellido
+        email:
+          type: string
+          format: email
+          title: Correo electronico
+        username:
+          type: string
+          title: Nombre de usuario
+        password:
+          type: string
+          writeOnly: true
+          title: Contraseña
+        password2:
+          type: string
+          writeOnly: true
+          title: Confirmar contraseña
+        is_staff:
+          type: boolean
+          title: Usuario administrador
+      required:
+      - email
+      - first_name
+      - id
+      - is_staff
+      - last_name
+      - password
+      - password2
+      - username
+    RegisterUser:
+      type: object
+      description: |-
+        Serializer para registro de clientes finales con creación
+        automática de Perfil y Carrito.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        first_name:
+          type: string
+          writeOnly: true
+          title: Nombre
+        last_name:
+          type: string
+          writeOnly: true
+          title: Apellido
+        email:
+          type: string
+          format: email
+          writeOnly: true
+          title: Correo electronico
+        username:
+          type: string
+          writeOnly: true
+          title: Nombre de usuario
+        password:
+          type: string
+          writeOnly: true
+          title: Contraseña
+        password2:
+          type: string
+          writeOnly: true
+          title: Confirmar contraseña
+      required:
+      - email
+      - first_name
+      - id
+      - last_name
+      - password
+      - password2
+      - username
+    RegisterValorationSerialize:
+      type: object
+      description: |-
+        Permite a un usuario registrar una valoración (1-5) para un producto. Cada
+        vez que se crea, actualiza la media del producto.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        user_name:
+          type: string
+          title: Nombre de usuario
+          description: 'Requerido. 150 carácteres como máximo. Únicamente letras,
+            dígitos y @/./+/-/_ '
+          readOnly: true
+        product:
+          type: integer
+          title: Seleccionar producto
+        product_name:
+          type: string
+          readOnly: true
+        valoration:
+          type: integer
+          default: 1
+          title: Valoración
+      required:
+      - id
+      - product
+      - product_name
+      - user_name
+    TokenObtainPair:
+      type: object
+      properties:
+        username:
+          type: string
+          writeOnly: true
+        password:
+          type: string
+          writeOnly: true
+        access:
+          type: string
+          readOnly: true
+        refresh:
+          type: string
+          readOnly: true
+      required:
+      - access
+      - password
+      - refresh
+      - username
+    TokenRefresh:
+      type: object
+      properties:
+        access:
+          type: string
+          readOnly: true
+        refresh:
+          type: string
+          writeOnly: true
+      required:
+      - access
+      - refresh
+    TokenVerify:
+      type: object
+      properties:
+        token:
+          type: string
+          writeOnly: true
+      required:
+      - token
+    TypeDocumentEnum:
+      enum:
+      - DNI
+      - CUIT
+      - PAS
+      type: string
+      description: |-
+        * `DNI` - DNI
+        * `CUIT` - CUIT/CUIL
+        * `PAS` - PASAPORTE
+    UpdatePassword:
+      type: object
+      description: |-
+        Serializer dedicado exclusivamente al cambio de contraseña,
+        verificando la contraseña actual contra la almacenada.
+      properties:
+        old_password:
+          type: string
+          writeOnly: true
+          title: Contraseña actual
+        new_password:
+          type: string
+          writeOnly: true
+          title: Nueva contraseña
+        confirm_password:
+          type: string
+          writeOnly: true
+          title: Confirmar contraseña
+      required:
+      - confirm_password
+      - new_password
+      - old_password
+    UpdateProfileUser:
+      type: object
+      description: |-
+        Actualiza la información del perfil del usuario, incluyendo validación
+        de documentos oficiales (DNI, CUIT, Pasaporte).
+      properties:
+        type_document:
+          allOf:
+          - $ref: '#/components/schemas/TypeDocumentEnum'
+          title: Tipo de documento
+        document:
+          type: string
+          title: Identificación
+        country:
+          type: integer
+          title: Seleccionar provincia
+        address:
+          type: string
+          title: Domicilio
+        marital_status:
+          allOf:
+          - $ref: '#/components/schemas/MaritalStatusEnum'
+          title: Estado civil
+      required:
+      - address
+      - country
+      - document
+      - marital_status
+      - type_document
+    UpdateUser:
+      type: object
+      description: |-
+        Permite actualizar los datos básicos del usuario (Nombre, Apellido, Email).
+        Mantiene el ID y el Username como campos de solo lectura por seguridad.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        username:
+          type: string
+          title: Nombre de usuario
+          description: 'Requerido. 150 carácteres como máximo. Únicamente letras,
+            dígitos y @/./+/-/_ '
+          readOnly: true
+        first_name:
+          type: string
+          title: Nombre
+        last_name:
+          type: string
+          title: Apellido
+        email:
+          type: string
+          format: email
+          title: Correo electronico
+      required:
+      - email
+      - first_name
+      - id
+      - last_name
+      - username
+  securitySchemes:
+    jwtAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

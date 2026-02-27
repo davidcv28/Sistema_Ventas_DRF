@@ -23,7 +23,7 @@ Este repositorio contiene un **sistema de ventas** desarrollado en **Django 6** 
 │   ├── filters.py
 │   ├── permission.py
 │   ├── tests.py
-│   └── migrations/ (historial de esquema)
+│   └── migrations/ (historial de esquema)pip
 └── DOCUMENTACION.md (este archivo)
 ```
 
@@ -52,8 +52,8 @@ Este repositorio contiene un **sistema de ventas** desarrollado en **Django 6** 
 
 1. **Clonar el repositorio** y acceder al directorio:
    ```bash
-   git clone <url> "Sistema de ventas"
-   cd "Sistema de ventas"
+   git clone "https://github.com/davidcv28/Sistema_Ventas_DRF.git" 
+   cd "Sistema_Ventas_DRF"
    ```
 2. **Crear y activar un entorno virtual** (venv, conda, etc.)
 3. **Instalar dependencias** (ver arriba)
@@ -74,6 +74,19 @@ Este repositorio contiene un **sistema de ventas** desarrollado en **Django 6** 
 8. **Acceder a** `http://127.0.0.1:8000/api/schema/swagger-ui/` para ver
    la documentación interactiva (Swagger).
 
+---
+
+## 🛠 Control de Versiones (Git & GitHub)
+
+El proyecto sigue un flujo de trabajo basado en ramas (aunque actualmente se encuentra en `main` para esta entrega inicial). 
+
+### Comandos útiles para colaboradores:
+- **Ver estado del repositorio:** `git status`
+- **Sincronizar cambios:** `git pull origin main`
+- **Subir nuevas funcionalidades:** ```bash
+  git add .
+  git commit -m "Descripción clara del cambio"
+  git push origin main
 > La base de datos por defecto en `settings.py` es PostgreSQL, pero en
 > desarrollo se puede usar SQLite modificando `DATABASES`.
 
